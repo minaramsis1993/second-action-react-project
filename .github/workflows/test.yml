@@ -7,7 +7,14 @@ jobs:
     steps:
       - name: Get Code From Github Repo
         uses: actions/checkout@v3 # Action to checkout the code
+
       - name: Install NodeJS
         uses: actions/setup-node@v3 # Action to set up Node.js
         with:
           node-version: "16"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm run test
