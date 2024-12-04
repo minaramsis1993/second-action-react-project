@@ -1,0 +1,13 @@
+name: Test React Project
+on: push
+jobs:
+  second-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Code From Github Repo
+        uses: actions/checkout@v3 # Action to checkout the code
+      - name: Install NodeJS
+        uses: actions/setup-node@v3 # Action to set up Node.js
+        with:
+          node-version: "16"
