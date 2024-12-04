@@ -1,0 +1,40 @@
+name: Deploy React Project
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code From Github Repo
+        uses: actions/checkout@v3 # Action to checkout the code
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v3 # Action to set up Node.js
+        with:
+          node-version: "16"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm run test
+
+  deploy: # this job runs on a different runner (Totally new VM, so we have to install all deps and redo of the above work)
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Get Code From Github Repo
+        uses: actions/checkout@v3 # Action to checkout the code
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v3 # Action to set up Node.js
+        with:
+          node-version: "16"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy
+        run: echo "Deploying ..."
