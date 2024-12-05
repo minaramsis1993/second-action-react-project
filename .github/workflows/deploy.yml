@@ -18,7 +18,7 @@ jobs:
       - name: Run Tests
         run: npm run test
 
-  deploy: # this job runs on a different runner (Totally new VM, so we have to install all deps and redo of the above work)
+  build: # this job runs on a different runner (Totally new VM, so we have to install all deps and redo of the above work)
     runs-on: ubuntu-latest
     needs: test
     steps:
@@ -44,5 +44,17 @@ jobs:
             dist
             package.json
 
+      - name: Deploy
+        run: echo "Deploying ..."
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-artifact
+      - name: Ouput Content
+        run: ls
       - name: Deploy
         run: echo "Deploying ..."
