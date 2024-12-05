@@ -7,6 +7,13 @@ jobs:
       - name: Get Code From Github Repo
         uses: actions/checkout@v3 # Action to checkout the code
 
+      # Action for caching deps used in package-lock.json and storing them in a global file accessible through the whole workflow
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install NodeJS
         uses: actions/setup-node@v3 # Action to set up Node.js
         with:
@@ -29,6 +36,12 @@ jobs:
         uses: actions/setup-node@v3 # Action to set up Node.js
         with:
           node-version: "16"
+          
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
         run: npm install
