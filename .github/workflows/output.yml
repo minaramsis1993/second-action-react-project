@@ -1,5 +1,11 @@
 name: Output Github Context
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: opened
+  workflow_dispatch:
 jobs:
   info:
     runs-on: ubuntu-latest
